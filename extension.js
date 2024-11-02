@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const crypto = require('crypto')
 
-const appDir = path.dirname(require.main.filename)
+const appDir = path.join(process.argv[1], '..')
 const rootDir = path.join(appDir, '..')
 
 const productFile = path.join(rootDir, 'product.json')
@@ -69,7 +69,7 @@ function restore() {
 function computeChecksum(file) {
   var contents = fs.readFileSync(file)
   return crypto
-    .createHash('md5')
+    .createHash('sha256')
     .update(contents)
     .digest('base64')
     .replace(/=+$/, '')
